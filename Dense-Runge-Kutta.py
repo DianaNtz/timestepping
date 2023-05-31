@@ -165,3 +165,29 @@ for j in range(0,len(method)):
         if(j!=len(method)-1):
             string=string+"\n"
 print(string)
+file = open("Errors.txt", "w")
+file.write(string)
+file.close()
+#convergence order calculation
+string=""
+for j in range(0,len(method)):
+    
+    s=method[j]
+    filename='data/method_'+s+'_error.npz'
+    error_data=np.load(filename)
+    error=error_data["error_loaded"]
+    n=error_data["n_loaded"]
+    filename='data/method_'+s+'_errorinter.npz'
+    errorinter_data=np.load(filename)
+    error_inter=errorinter_data["errorinter_loaded"]
+   
+    for i in range(len(n)-2,len(n)-1):
+        c1=error[i]/error[i+1]
+        c2=error_inter[i]/error_inter[i+1]
+        string=string+"2^p"+" for "+s+": "+str(c1)+"\n"+"2^p for "+s+": "+str(c2)+"(interpolated)"+"\n"
+        if(j!=len(method)-1):
+            string=string+"\n"
+print(string)
+file = open("Convergence.txt", "w")
+file.write(string)
+file.close()

@@ -1,0 +1,5 @@
+2^p for DorPr4: 15.894413183279744
+2^p for DorPr4: 15.894253474141136(interpolated)
+
+2^p for DorPr5: 31.361990950226243
+2^p for DorPr5: 31.361990950226243(interpolated)
