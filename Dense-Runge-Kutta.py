@@ -84,3 +84,84 @@ def interpolate(t,u,k,sigma,string,c8=2/5,gamma=-1/30000,a86=1/20):
         uneu=u+(bstrichvec[0]*k[0]+bstrichvec[1]*k[1]+bstrichvec[2]*k[2]+bstrichvec[3]*k[3]+bstrichvec[4]*k[4]+bstrichvec[5]*k[5]+bstrichvec[6]*k[6]+bstrichvec[7]*k8)*sigma
 
     return tneu,uneu  
+#plotting and error calculation
+nende=13
+nstart=7
+n=np.zeros(nende-nstart+1, dtype='double')
+error=np.zeros(nende-nstart+1, dtype='double')
+errorinter=np.zeros(nende-nstart+1, dtype='double')
+method=["DorPr4","DorPr5"]
+string=""
+for j in range(0,len(method)):
+        #print(method[j])
+        string=string+method[j]+":"+"\n"
+        for i in range(nstart,nende+1):
+                t0=0
+                tfinal=10
+                steps=2**i
+                u0=0.0000001
+                
+                t,u,k,s= RungeKutta(t0,tfinal,steps,u0,method[j])
+                ua=u0*np.exp(-0.5*(t-6*2)*t)
+                
+                ax1 = plt.subplots(1, sharex=True, figsize=(10,5))          
+                plt.plot(t,ua,color='black',linestyle='-',linewidth=3,label="$u_a(t)$")
+                plt.plot(t,u,color='deepskyblue',linestyle='-.',linewidth=3,label = "$u_n(t)$")
+                plt.xlabel("t",fontsize=19) 
+                plt.ylabel(r' ',fontsize=19,labelpad=20).set_rotation(0)
+                plt.ylim([0,np.max(u)])
+                plt.xlim([t0,tfinal]) 
+                plt.xticks(fontsize= 17)
+                plt.yticks(fontsize= 17) 
+                plt.title(s+" n={0:.0f}".format(2**i),fontsize=22)
+                plt.legend(loc=2,fontsize=19,handlelength=3) 
+                plt.show()
+                
+                dt=(tfinal-t0)/(steps)
+                err=np.max(np.abs(ua[:steps]-u[:steps]))
+                string=string+" n=2^"+str(i)+" Error: "+str(err)+"\n"
+                error[i-nstart]=err
+                
+                t1,u1=interpolate(t,u,k,0.2,s)
+                ua1=u0*np.exp(-0.5*(t1-6*2)*t1)
+                
+                ax1 = plt.subplots(1, sharex=True, figsize=(10,5))          
+                plt.plot(t1,ua1,color='black',linestyle='-',linewidth=3,label="$u_a(t)$")
+                plt.plot(t1,u1,color='deepskyblue',linestyle='-.',linewidth=3,label = "$u_{inter}(t)$")
+                plt.xlabel("t",fontsize=19) 
+                plt.ylabel(r' ',fontsize=19,labelpad=20).set_rotation(0)
+                plt.ylim([0,np.max(u1)])
+                plt.xlim([t1[0],t1[-1]]) 
+                plt.xticks(fontsize= 17)
+                plt.yticks(fontsize= 17) 
+                plt.title(s+" interpolated n={0:.0f}".format(2**i),fontsize=22)
+                plt.legend(loc=2,fontsize=19,handlelength=3) 
+                plt.show()
+                
+                errinter=np.max(np.abs(ua1[:steps]-u1[:steps]))
+                errorinter[i-nstart]=errinter
+                string=string+" n=2^"+str(i)+" Error: "+str(errinter)+" (interpolated)"+"\n"
+                n[i-nstart]=2**i
+        filename='data/method_'+s+'_error.npz'
+        np.savez(filename, n_loaded=n, error_loaded=error)
+        filename='data/method_'+s+'_errorinter.npz'
+        np.savez(filename, n_loaded=n, errorinter_loaded=errorinter)
+        ax1 = plt.subplots(1, sharex=True, figsize=(6,5))  
+        plt.xscale('log', base=2) 
+        plt.yscale('log', base=10) 
+        plt.plot(n,error,color='black',linestyle='-',linewidth=3,label = "non-interpolated")
+        plt.plot(n,errorinter,color='blue',linestyle=':',linewidth=3,label = "interpolated")
+        plt.xlabel("n",fontsize=19) 
+        plt.ylabel('Error',fontsize=19)
+        plt.ylim([np.min(error),np.max(error)])
+        plt.xlim([n[0],n[-1]]) 
+        plt.xticks(n,fontsize= 17)
+        plt.yticks(fontsize= 17) 
+        plt.legend(loc=1,fontsize=19,handlelength=3) 
+        plt.title("Error "+s+" ",fontsize=22)
+        plt.savefig("figures/method_"+s+"_error.pdf")
+        plt.show()
+        
+        if(j!=len(method)-1):
+            string=string+"\n"
+print(string)
