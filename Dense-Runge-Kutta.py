@@ -146,22 +146,6 @@ for j in range(0,len(method)):
         np.savez(filename, n_loaded=n, error_loaded=error)
         filename='data/method_'+s+'_errorinter.npz'
         np.savez(filename, n_loaded=n, errorinter_loaded=errorinter)
-        ax1 = plt.subplots(1, sharex=True, figsize=(6,5))  
-        plt.xscale('log', base=2) 
-        plt.yscale('log', base=10) 
-        plt.plot(n,error,color='black',linestyle='-',linewidth=3,label = "non-interpolated")
-        plt.plot(n,errorinter,color='blue',linestyle=':',linewidth=3,label = "interpolated")
-        plt.xlabel("n",fontsize=19) 
-        plt.ylabel('Error',fontsize=19)
-        plt.ylim([np.min(error),np.max(error)])
-        plt.xlim([n[0],n[-1]]) 
-        plt.xticks(n,fontsize= 17)
-        plt.yticks(fontsize= 17) 
-        plt.legend(loc=1,fontsize=19,handlelength=3) 
-        plt.title("Error "+s+" ",fontsize=22)
-        plt.savefig("figures/method_"+s+"_error.pdf")
-        plt.show()
-        
         if(j!=len(method)-1):
             string=string+"\n"
 print(string)
@@ -171,7 +155,6 @@ file.close()
 #convergence order calculation
 string=""
 for j in range(0,len(method)):
-    
     s=method[j]
     filename='data/method_'+s+'_error.npz'
     error_data=np.load(filename)
@@ -180,7 +163,6 @@ for j in range(0,len(method)):
     filename='data/method_'+s+'_errorinter.npz'
     errorinter_data=np.load(filename)
     error_inter=errorinter_data["errorinter_loaded"]
-   
     for i in range(len(n)-2,len(n)-1):
         c1=error[i]/error[i+1]
         c2=error_inter[i]/error_inter[i+1]
@@ -191,3 +173,38 @@ print(string)
 file = open("Convergence.txt", "w")
 file.write(string)
 file.close()
+
+
+filename='data/method_DorPr5_error.npz'
+error_data=np.load(filename)
+error5=error_data["error_loaded"]
+n=error_data["n_loaded"]
+filename='data/method_DorPr5_errorinter.npz'
+errorinter_data=np.load(filename)
+errorinter5=errorinter_data["errorinter_loaded"]
+
+filename='data/method_DorPr4_error.npz'
+error_data=np.load(filename)
+error4=error_data["error_loaded"]
+n=error_data["n_loaded"]
+filename='data/method_DorPr4_errorinter.npz'
+errorinter_data=np.load(filename)
+errorinter4=errorinter_data["errorinter_loaded"]
+
+ax1 = plt.subplots(1, sharex=True, figsize=(10,4.5))  
+plt.xscale('log', base=2) 
+plt.yscale('log', base=10) 
+plt.plot(n,error5,color='green',linestyle='-',linewidth=3,label = "DorPr5")
+plt.plot(n,errorinter5,color='blue',linestyle=':',linewidth=3,label = "DorPr5 interpolated")
+plt.plot(n,error4,color='red',linestyle='-',linewidth=3,label = "DorPr4")
+plt.plot(n,errorinter4,color='k',linestyle=':',linewidth=3,label = "DorPr4 interpolated")
+plt.xlabel("N",fontsize=17) 
+plt.ylabel('Error',fontsize=17)
+plt.ylim([np.min(error4),10**(-3)])
+plt.xlim([n[0],n[-1]]) 
+plt.xticks(n,fontsize= 17)
+plt.yticks(fontsize= 17) 
+plt.legend(loc=1,fontsize=17,handlelength=3) 
+#plt.title("Error Comparison",fontsize=22)
+plt.savefig("figures/error.pdf")
+plt.show()  
