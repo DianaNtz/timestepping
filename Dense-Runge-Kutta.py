@@ -163,7 +163,8 @@ for j in range(0,len(method)):
     filename='data/method_'+s+'_errorinter.npz'
     errorinter_data=np.load(filename)
     error_inter=errorinter_data["errorinter_loaded"]
-    for i in range(len(n)-2,len(n)-1):
+    for i in range(0,len(n)-1):
+        string=string+str(i)+"\n"
         c1=error[i]/error[i+1]
         c2=error_inter[i]/error_inter[i+1]
         string=string+"2^p"+" for "+s+": "+str(c1)+"\n"+"2^p for "+s+": "+str(c2)+"(interpolated)"+"\n"

@@ -1,5 +1,42 @@
+0
+2^p for DorPr4: 12.60872712093977
+2^p for DorPr4: 12.604096914731251(interpolated)
+
+1
+2^p for DorPr4: 14.30745822208517
+2^p for DorPr4: 14.307349674425877(interpolated)
+
+2
+2^p for DorPr4: 15.15659454168452
+2^p for DorPr4: 15.15662289419511(interpolated)
+
+3
+2^p for DorPr4: 15.578835999426975
+2^p for DorPr4: 15.57894679524397(interpolated)
+
+4
+2^p for DorPr4: 15.78963998250108
+2^p for DorPr4: 15.789617855977827(interpolated)
+
+5
 2^p for DorPr4: 15.894413183279744
 2^p for DorPr4: 15.894253474141136(interpolated)
 
+0
+2^p for DorPr5: 20.99318681594528
+2^p for DorPr5: 20.985349733491564(interpolated)
+1
+2^p for DorPr5: 26.393457190521616
+2^p for DorPr5: 26.393200636976488(interpolated)
+2
+2^p for DorPr5: 29.16630451105836
+2^p for DorPr5: 29.166335228959593(interpolated)
+3
+2^p for DorPr5: 30.571920310668904
+2^p for DorPr5: 30.571936065001196(interpolated)
+4
+2^p for DorPr5: 31.394459673928726
+2^p for DorPr5: 31.394603953253498(interpolated)
+5
 2^p for DorPr5: 31.361990950226243
 2^p for DorPr5: 31.361990950226243(interpolated)
