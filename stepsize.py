@@ -58,3 +58,18 @@ while(tn<=10):
         dt=0.95*dt*(tol/np.abs(err))**(0.25)
     if(np.abs(err) <= tol):
         dt=0.95*dt*(tol/np.abs(err))**(0.2)
+#analytical solution       
+ua=u0*np.exp(-0.5*(t-a*2)*t)
+#plotting analytical vs numerical solutions for order 5
+ax1 = plt.subplots(1, sharex=True, figsize=(10,5))          
+plt.plot(t,ua,color='black',linestyle='-',linewidth=3,label="$u_a(t)$")
+plt.plot(t,u,color='deepskyblue',linestyle='-.',linewidth=3,label = "$u_n(t)$")
+plt.xlabel("t",fontsize=19) 
+plt.ylabel(r' ',fontsize=19,labelpad=20).set_rotation(0)
+plt.ylim([0,8])
+plt.xlim([t0,tfinal]) 
+plt.xticks(fontsize= 17)
+plt.yticks(fontsize= 17) 
+plt.legend(loc=2,fontsize=19,handlelength=3) 
+plt.savefig("stepsize.pdf")
+plt.show()
