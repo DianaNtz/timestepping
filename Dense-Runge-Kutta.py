@@ -1,5 +1,5 @@
 """
-The code below was written by @author: Diana Nitzschke (https://github.com/DianaNtz) and
+The code below was written by https://github.com/DianaNtz and
 is an implementation of dense Runge-Kutta methods for the Dormand–Prince
 embedded Runge-Kutta method of order 4 and 5.
 """
